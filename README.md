@@ -6,3 +6,10 @@
 #Run
 - node app.js or npm start
 - open browser http://localhost:8081
+
+#Links
+- http://johnny-five.io/
+- https://github.com/firmata/protocol
+- http://socket.io/docs/
+- http://smoothiecharts.org/
+
