@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.js"></script>
+        <script src="smoothie.js"></script>
+        <script>
+            window.onload = function() {
+                var socket = io.connect('http://localhost:8081');
+
+                var smoothie = new SmoothieChart();
+                smoothie.streamTo(document.getElementById("mycanvas"));
+                var line1 = new TimeSeries();
+
+                socket.on('temp', function (data) {
+                    console.log('Avg temp: ', data.data);
+                    line1.append(new Date().getTime(), data.data);
+                });
+
+                smoothie.addTimeSeries(line1, { strokeStyle:'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.4)', lineWidth:1 });
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="mycanvas" width="800" height="300"></canvas>
+    </body>
+</html>
