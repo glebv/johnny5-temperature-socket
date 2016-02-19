@@ -17,13 +17,16 @@ app.get('/', function (req, res) {
 });
 app.use(express.static('static'));
 
-
 board.on("ready", function () {
   var temp = new five.Temperature({
     pin: "A0",
     controller: "LM35"
   });
 
+  sendData(temp);
+});
+
+function sendData(temp) {
   io.on('connection', function (socket) {
     temp.on("change", function () {
       console.log("Temp: %d", this.celsius);
@@ -33,7 +36,7 @@ board.on("ready", function () {
       });
     });
   });
-});
+}
 
 function avgTemp(temp, cb) {
   if(new Date().getTime() - curTime <= interval) {
